@@ -1,0 +1,24 @@
+# The dependency review ledger.
+#
+# This file is the audit trail. A PR that adds or edits an entry here,
+# reviewed and merged like any other change, IS the attestation — there
+# is no separate database or UI. Identity comes from git's own commit
+# author (sign your commits); tamper-evidence comes from git history
+# itself; segregation of duties comes from requiring a second approver
+# on this file via branch protection. depreview's job is only to tell
+# you when this file is out of date, never to decide anything on its
+# own.
+#
+# Example entry:
+#
+# reviews:
+#   - package: lodash
+#     ecosystem: npm
+#     version: "4.17.21"
+#     license: MIT
+#     decision: approved       # approved | flagged | rejected
+#     reviewed_by: dave
+#     reviewed_at: "2026-07-12"
+#     rationale: "Standard utility lib, no known issues, widely used"
+
+reviews: []

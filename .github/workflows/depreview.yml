@@ -1,0 +1,28 @@
+name: dependency review
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      # v0: install Syft directly via its official install script rather
+      # than a marketplace action, to keep this workflow self-contained
+      # while the tool itself is still a moving target.
+      - name: install syft
+        run: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: build depreview
+        run: go build -o /usr/local/bin/depreview ./cmd/depreview
+
+      - name: check dependencies against the ledger
+        run: depreview -path . -ledger .depreview/ledger.yaml
